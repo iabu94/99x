@@ -49,3 +49,13 @@ Thumbs.db
 *.wmv
 
 /Adra-BE/.vs/Adra-BE/v17
+/Adra-BE/.vs/Adra-BE/DesignTimeBuild
+/Adra-BE/Adra.Api/bin/Debug/net5.0
+/Adra-BE/Adra.Api/obj
+*.user
+/Adra-BE/Adra.Data/bin/Debug/net5.0
+/Adra-BE/Adra.Data/obj
+/Adra-BE/Adra.Domain/bin/Debug/net5.0
+/Adra-BE/Adra.Domain/obj
+/Adra-BE/Adra.Infrastructure/bin/Debug/net5.0
+/Adra-BE/Adra.Infrastructure/obj
