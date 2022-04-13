@@ -1,1 +1,14 @@
 <adra-toolbar></adra-toolbar>
+
+<button mat-raised-button>Upload</button>
+
+<mat-form-field appearance="fill">
+    <mat-label>Month</mat-label>
+    <mat-select>
+        <mat-option *ngFor="let key of keys" [value]="key">{{months[key]}}</mat-option>
+    </mat-select>
+</mat-form-field>
+<mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Year</mat-label>
+    <input matInput placeholder="Ex. 2022" value="2022">
+</mat-form-field>
