@@ -6,6 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Adra.Api.Middlewares;
+using Adra.Infrastructure.Contracts;
+using Adra.Infrastructure.Services;
+using Adra.Domain.Contracts;
+using Adra.Data.Repositories;
 
 namespace Adra.Api
 {
@@ -25,11 +30,16 @@ namespace Adra.Api
             {
                 options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IUnitOfWork, AdraContext>(s => s.GetService<AdraContext>());
+            services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IReportRepository, ReportRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Adra.Api", Version = "v1" });
             });
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +63,8 @@ namespace Adra.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
