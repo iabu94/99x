@@ -15,8 +15,14 @@ namespace Adra.Api.Mappings
                 .ForMember(r => r.Month, m => m.Ignore());
 
             CreateMap<Balance, BalanceInfo>()
-                .ForMember(b => b.Name, i => i.MapFrom(d => d.AccountName))
                 .ReverseMap();
+
+            CreateMap<Report, ReportDto>()
+                .ForMember(r => r.Month, m => m.MapFrom(d => d.MonthId))
+                .ReverseMap()
+                .ForMember(r => r.Month, m => m.Ignore());
+
+            CreateMap<Balance, BalanceDto>();
         }
     }
 }

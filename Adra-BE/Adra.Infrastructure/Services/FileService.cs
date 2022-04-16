@@ -25,7 +25,7 @@ namespace Adra.Infrastructure.Services
                 foreach (var record in readRecords)
                 {
                     var exp = record as IDictionary<string, object>;
-                    records.Add(new BalanceInfo { Name = exp["Field1"].ToString(), Amount = Convert.ToDouble(exp["Field2"]) });
+                    records.Add(new BalanceInfo { AccountName = exp["Field1"].ToString(), Amount = Convert.ToDouble(exp["Field2"]) });
                 }
             }
             return records;

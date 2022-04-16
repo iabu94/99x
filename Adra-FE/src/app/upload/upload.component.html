@@ -1,0 +1,19 @@
+<form [formGroup]="fileUploadForm" (ngSubmit)="uploadReport()" class="file-upload-form">
+    <!-- Year -->
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Year</mat-label>
+        <input formControlName="year" matInput placeholder="Ex. 2022" value="2022">
+    </mat-form-field>
+    <!-- Month -->
+    <mat-form-field appearance="fill">
+        <mat-label>Month</mat-label>
+        <mat-select formControlName="month">
+            <mat-option *ngFor="let key of keys" [value]="key">{{months[key]}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <!-- File -->
+    <input #file type="file" (change)="onFileSelected(file.files)" />
+    <!-- Upload -->
+    <button class="btn-submit" mat-raised-button color="primary" type="submit">Upload</button>
+</form>
+<adra-upload-summary *ngIf="!!report" [report]="report"></adra-upload-summary>

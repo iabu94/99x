@@ -1,0 +1,37 @@
+<form [formGroup]="graphForm" (ngSubmit)="fetchGraphData()">
+    <div class="from">
+        <h3>From</h3>
+        <mat-form-field appearance="fill">
+            <mat-label>Year</mat-label>
+            <mat-select formControlName="yearStart">
+                <mat-option *ngFor="let year of fromYears" [value]="year">{{year}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Month</mat-label>
+            <mat-select formControlName="monthStart">
+                <mat-option *ngFor="let m of fromMonths" [value]="m">{{month[m]}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="to">
+        <h3>To</h3>
+        <mat-form-field appearance="fill">
+            <mat-label>Year</mat-label>
+            <mat-select formControlName="yearEnd">
+                <mat-option *ngFor="let year of toYears" [value]="year">{{year}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Month</mat-label>
+            <mat-select formControlName="monthEnd">
+                <mat-option *ngFor="let m of toMonths" [value]="m">{{month[m]}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <button class="btn-submit" mat-raised-button color="primary" type="submit">Generate</button>
+</form>
+
+<google-chart #chart [title]="title" [type]="type" [data]="data" [columns]="columnNames" [options]="options"
+    [width]="width" [height]="height">
+</google-chart>

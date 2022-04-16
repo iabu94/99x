@@ -1,0 +1,27 @@
+<form [formGroup]="yearMonthForm" (ngSubmit)="viewBalance()">
+    <mat-form-field appearance="fill">
+        <mat-label>Year</mat-label>
+        <mat-select formControlName="year">
+            <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Month</mat-label>
+        <mat-select formControlName="month">
+            <mat-option *ngFor="let month of months" [value]="month">{{monthList[month]}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button class="btn-submit" mat-raised-button color="primary" type="submit">View</button>
+</form>
+
+<div class="" *ngIf="!!report">
+    <h4>Balances as of {{monthList[report.month]}} {{report.year}}</h4>
+    <table>
+        <tr>
+            <th *ngFor="let balance of report.balances"><u>{{balance.accountName}}</u></th>
+        </tr>
+        <tr>
+            <td *ngFor="let balance of report.balances">{{balance.amount | number}}</td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,9 @@
+<div class="summary">
+    <h3>Upload Summary</h3>
+    <h4>Account Balances for {{report.year}} {{months[report.month]}}</h4>
+    <mat-list role="list">
+        <mat-list-item *ngFor="let balance of report.balances" role="listitem">
+            {{balance.accountName}}: {{balance.amount | number}}
+        </mat-list-item>
+    </mat-list>
+</div>
