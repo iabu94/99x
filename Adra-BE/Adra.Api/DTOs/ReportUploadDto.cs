@@ -8,5 +8,6 @@ namespace Adra.Api.DTOs
         public int Year { get; set; }
         public int Month { get; set; }
         public IFormFile File { get; set; }
+        public bool IsUpdate { get; set; }
     }
 }

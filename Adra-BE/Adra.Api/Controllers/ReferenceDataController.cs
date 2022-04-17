@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Adra.Api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ReferenceDataController : ControllerBase
     {

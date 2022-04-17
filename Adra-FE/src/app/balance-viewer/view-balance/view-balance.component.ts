@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Month } from '../enums/month';
-import { monthsByYear, unique } from '../helpers';
-import { Report, YearMonth } from '../models';
-import { TestService } from '../test.service';
+import { Month } from '../../enums/month';
+import { monthsByYear, unique } from '../../helpers';
+import { Report, YearMonth } from '../../models';
+import { ReportService } from '../../services';
 
 @Component({
   selector: 'adra-view-balance',
@@ -21,7 +21,7 @@ export class ViewBalanceComponent {
 
   yearMonthForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private svc: TestService) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private reportService: ReportService) {
 
     this.yearMonths = this.route.snapshot.data['yearMonths'];
     this.years = unique(this.yearMonths.map(x => x.year));
@@ -37,7 +37,7 @@ export class ViewBalanceComponent {
       this.f['month'].patchValue(this.months[this.months.length - 1]);
     });
 
-    this.svc.getAccountBalances(this.yearMonthForm.value)
+    this.reportService.getAccountBalances(this.yearMonthForm.value)
       .subscribe(data => this.report = data);
   }
 
@@ -46,7 +46,7 @@ export class ViewBalanceComponent {
   }
 
   viewBalance() {
-    this.svc.getAccountBalances(this.yearMonthForm.value)
+    this.reportService.getAccountBalances(this.yearMonthForm.value)
       .subscribe(data => this.report = data);
   }
 }

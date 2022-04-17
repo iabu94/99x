@@ -1,28 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ReportComponent } from './report/report.component';
-import { YearsResolver } from './services/years.resolver';
-import { UploadComponent } from './upload/upload.component';
-import { ViewBalanceComponent } from './view-balance/view-balance.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: UploadComponent
+    redirectTo: 'upload-file',
+    pathMatch: 'full'
   },
   {
-    path: 'view-balance',
-    resolve: {
-      yearMonths: YearsResolver
-    },
-    component: ViewBalanceComponent
+    path: 'upload-file',
+    loadChildren: () => import('./upload-file/upload-file.module')
+      .then(m => m.UploadFileModule)
   },
   {
-    path: 'report',
-    resolve: {
-      yearMonths: YearsResolver
-    },
-    component: ReportComponent
+    path: 'generate-graph',
+    loadChildren: () => import('./generate-graph/generate-graph.module')
+      .then(m => m.GenerateGraphModule)
+  },
+  {
+    path: 'balance-viewer',
+    loadChildren: () => import('./balance-viewer/balance-viewer.module')
+      .then(m => m.BalanceViewerModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'upload-file'
   }
 ];
 

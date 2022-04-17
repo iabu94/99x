@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
+  ActivatedRouteSnapshot, Resolve,
+  RouterStateSnapshot
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { TestService } from '../test.service';
+import { Observable } from 'rxjs';
+import { ReferenceDataService } from './reference-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class YearsResolver implements Resolve<any> {
-  constructor(private svc: TestService) {
+  constructor(private referenceService: ReferenceDataService) {
   }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return this.svc.getYears();
+    return this.referenceService.getYears();
   }
 }

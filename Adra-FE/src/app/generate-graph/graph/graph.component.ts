@@ -2,17 +2,17 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ChartType } from 'angular-google-charts';
-import { Month } from '../enums/month';
-import { last, monthsByYear, unique } from '../helpers';
-import { Report, YearMonth } from '../models';
-import { TestService } from '../test.service';
+import { GraphService } from 'src/app/services';
+import { Month } from '../../enums/month';
+import { last, monthsByYear, unique } from '../../helpers';
+import { Report, YearMonth } from '../../models';
 
 @Component({
-  selector: 'adra-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss']
+  selector: 'adra-graph',
+  templateUrl: './graph.component.html',
+  styleUrls: ['./graph.component.scss']
 })
-export class ReportComponent {
+export class GraphComponent {
   title = ``;
   type = ChartType.LineChart;
   options = {
@@ -39,7 +39,7 @@ export class ReportComponent {
 
   graphForm: FormGroup;
 
-  constructor(private svc: TestService, private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(private graphService: GraphService, private fb: FormBuilder, private route: ActivatedRoute) {
     this.graphForm = this.initializeForm();
     this.yearMonths = this.route.snapshot.data['yearMonths'];
     this.setupFormControlValues();
@@ -57,7 +57,7 @@ export class ReportComponent {
   }
 
   fetchGraphData() {
-    this.svc.getGraphData(this.graphForm.value).subscribe(reports => {
+    this.graphService.getGraphData(this.graphForm.value).subscribe(reports => {
       this.reports = reports;
       this.generateGraphData();
     });

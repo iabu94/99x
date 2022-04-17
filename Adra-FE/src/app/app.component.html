@@ -1,15 +1,1 @@
-<adra-toolbar></adra-toolbar>
-
-<mat-sidenav-container class="adra-container">
-    <mat-sidenav #sidenav mode="side" opened class="adra-sidenav">
-        <mat-nav-list>
-            <mat-list-item routerLink="">Upload Balance</mat-list-item>
-            <mat-list-item [routerLink]="['/view-balance']">View Balances</mat-list-item>
-            <mat-list-item [routerLink]="['/report']">Graph</mat-list-item>
-        </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content class="adra-sidenav-content">
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
-
-</mat-sidenav-container>
+<adra-layout></adra-layout>

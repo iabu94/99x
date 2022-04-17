@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Month } from '../enums/month';
-import { Report } from '../models';
+import { Component, Input } from '@angular/core';
+import { Month } from '../../enums/month';
+import { Report } from '../../models';
 
 @Component({
   selector: 'adra-upload-summary',

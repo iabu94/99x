@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Month } from '../enums/month';
-import { Report } from '../models';
-import { TestService } from '../test.service';
-import { MatDialog } from "@angular/material/dialog";
-import { ReportExistsConfirmationDialogComponent } from '../dialog-components';
+import { MatDialog } from '@angular/material/dialog';
+import { Month } from 'src/app/enums';
+import { Report } from 'src/app/models';
+import { ReportService } from 'src/app/services';
+import { ReportExistsConfirmationDialogComponent } from '../report-exists-confirmation-dialog/report-exists-confirmation-dialog.component';
 
 @Component({
   selector: 'adra-upload',
@@ -17,7 +17,7 @@ export class UploadComponent {
   months = Month;
   keys: number[] = [];
 
-  constructor(private fb: FormBuilder, private svc: TestService, public dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private reportService: ReportService, public dialog: MatDialog) {
     this.fileUploadForm = this.fb.group({
       year: new FormControl(new Date().getFullYear(), Validators.required),
       month: new FormControl(new Date().getMonth() + 1, Validators.required),
@@ -33,21 +33,21 @@ export class UploadComponent {
   }
 
   uploadReport() {
-    this.svc.checkReportExists(this.fileUploadForm.value).subscribe(exists => {
+    this.reportService.checkReportExists(this.fileUploadForm.value).subscribe(exists => {
       if (exists) {
         const dialogRef = this.dialog.open(ReportExistsConfirmationDialogComponent);
         dialogRef.afterClosed().subscribe(agree => {
           if (agree) {
-            this.svc
-              .update(this.fileUploadForm.value)
+            this.reportService
+              .uploadCsv(this.fileUploadForm.value, true)
               ?.subscribe((data: any) => {
                 this.report = data.body;
               });
           }
         });
       } else {
-        this.svc
-          .upload(this.fileUploadForm.value)
+        this.reportService
+          .uploadCsv(this.fileUploadForm.value)
           ?.subscribe((data: any) => {
             this.report = data.body;
           });
