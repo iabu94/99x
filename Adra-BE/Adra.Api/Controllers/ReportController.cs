@@ -5,6 +5,7 @@ using Adra.Infrastructure.Contracts;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Adra.Api.Controllers
@@ -30,6 +31,10 @@ namespace Adra.Api.Controllers
         public async Task<IActionResult> UploadReport([FromForm] ReportUploadDto reportUploadDto)
         {
             var records = _mapper.Map<IList<Balance>>(_fileService.ReadCsv(reportUploadDto.File.OpenReadStream()));
+            if (records == null || !records.Any())
+            {
+                return BadRequest("The uploaded csv file does not have any records or invalid format");
+            }
             var report = _mapper.Map<Report>(reportUploadDto);
             report.Balances = records;
             await _reportRepository.AddAsync(report);
@@ -53,6 +58,10 @@ namespace Adra.Api.Controllers
         public IActionResult GetAccountBalanceByYearMonth(int year, int month)
         {
             var res = _mapper.Map<ReportDto>(_reportRepository.GetByYearMonth(year, month));
+            if (res == null)
+            {
+                return NotFound("The balance records belongs to the specific year and month is not found.");
+            }
             return Ok(res);
         }
 

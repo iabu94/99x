@@ -59,3 +59,5 @@ Thumbs.db
 /Adra-BE/Adra.Domain/obj
 /Adra-BE/Adra.Infrastructure/bin/Debug/net5.0
 /Adra-BE/Adra.Infrastructure/obj
+/Adra-BE/Adra.Api.Tests/bin/Debug/net5.0
+/Adra-BE/Adra.Api.Tests/obj
