@@ -1,4 +1,15 @@
-# AdraFE
+# Accounts balance viewer
+
+Account balance viewer (ADRA) is an Account balance overview tool, that has been implemented for the Jondell Corp.
+
+This repository contains the Frontend Angular project and .net core backend project in the same directory with different sub folders.
+
+## Simple Intro
+
+**Admin Users:** There are 2 navigation menus available for these users.
+
+- 1.  Upload Balance - Users can upload any month's account balances in a csv format.
+- 2. Graph - Users can select a time period and generate the report based on the period.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.3.
 
