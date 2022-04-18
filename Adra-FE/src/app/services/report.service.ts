@@ -1,6 +1,8 @@
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs';
 import { Report, ReportUpload, YearMonth } from '../models';
+import { handleError } from './error-handler';
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +28,20 @@ export class ReportService {
     });
     // Using request method instead of post method because we have to send a file along with the request. 
     // So we are sending as form data.
-    return this.http.request(uploadReq);
+    return this.http.request(uploadReq).pipe(
+      catchError(handleError)
+    );
   }
 
   getAccountBalances(formValue: YearMonth) {
-    return this.http.get<Report>(`${this.url}/${formValue.year}/${formValue.month}`);
+    return this.http.get<Report>(`${this.url}/${formValue.year}/${formValue.month}`).pipe(
+      catchError(handleError)
+    );
   }
 
   checkReportExists(formValue: any) {
-    return this.http.get<boolean>(`${this.url}/Exists/${formValue.year}/${formValue.month}`);
+    return this.http.get<boolean>(`${this.url}/Exists/${formValue.year}/${formValue.month}`).pipe(
+      catchError(handleError)
+    );
   }
 }

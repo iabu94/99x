@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'adra-report-exists-confirmation-dialog',
-  templateUrl: './report-exists-confirmation-dialog.component.html',
-  styleUrls: ['./report-exists-confirmation-dialog.component.scss']
+  templateUrl: './report-exists-confirmation-dialog.component.html'
 })
 export class ReportExistsConfirmationDialogComponent implements OnInit {
 
