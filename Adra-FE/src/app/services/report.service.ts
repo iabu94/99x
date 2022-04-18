@@ -1,6 +1,6 @@
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Report, ReportUpload } from '../models';
+import { Report, ReportUpload, YearMonth } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class ReportService {
     return this.http.request(uploadReq);
   }
 
-  getAccountBalances(formValue: any) {
+  getAccountBalances(formValue: YearMonth) {
     return this.http.get<Report>(`${this.url}/${formValue.year}/${formValue.month}`);
   }
 

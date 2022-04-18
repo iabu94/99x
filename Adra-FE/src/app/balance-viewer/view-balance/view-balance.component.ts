@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Month } from '../../enums/month';
-import { monthsByYear, unique } from '../../helpers';
+import { last, monthsByYear, todayYearMonth, unique } from '../../helpers';
 import { Report, YearMonth } from '../../models';
 import { ReportService } from '../../services';
 
@@ -15,38 +14,28 @@ export class ViewBalanceComponent {
   yearMonths: YearMonth[] = [];
   years: number[] = [];
   months: number[] = [];
+  selectedYearMonth: YearMonth = todayYearMonth();
   monthList = Month;
 
   report!: Report;
 
-  yearMonthForm: FormGroup;
-
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private reportService: ReportService) {
+  constructor(private route: ActivatedRoute, private reportService: ReportService) {
 
     this.yearMonths = this.route.snapshot.data['yearMonths'];
     this.years = unique(this.yearMonths.map(x => x.year));
     this.months = monthsByYear(this.yearMonths, this.years[this.years.length - 1]);
+    this.selectedYearMonth = { year: last(this.years), month: last(this.months) };
 
-    this.yearMonthForm = this.fb.group({
-      year: new FormControl(this.years[this.years.length - 1], Validators.required),
-      month: new FormControl(this.months[this.months.length - 1], Validators.required)
-    });
-
-    this.f['year'].valueChanges.subscribe(year => {
-      this.months = monthsByYear(this.yearMonths, year);
-      this.f['month'].patchValue(this.months[this.months.length - 1]);
-    });
-
-    this.reportService.getAccountBalances(this.yearMonthForm.value)
-      .subscribe(data => this.report = data);
+    this.getAcBalance();
   }
 
-  get f() {
-    return this.yearMonthForm.controls;
+  yearMonthChanged(yearMonth: YearMonth) {
+    this.selectedYearMonth = yearMonth;
+    this.months = monthsByYear(this.yearMonths, yearMonth.year);
   }
 
-  viewBalance() {
-    this.reportService.getAccountBalances(this.yearMonthForm.value)
+  getAcBalance() {
+    this.reportService.getAccountBalances(this.selectedYearMonth)
       .subscribe(data => this.report = data);
   }
 }

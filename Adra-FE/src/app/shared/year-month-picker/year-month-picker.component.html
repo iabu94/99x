@@ -1,0 +1,14 @@
+<form [formGroup]="yearMonthForm">
+    <mat-form-field appearance="fill">
+        <mat-label>Year</mat-label>
+        <mat-select formControlName="year">
+            <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Month</mat-label>
+        <mat-select formControlName="month">
+            <mat-option *ngFor="let month of months" [value]="month">{{monthList[month]}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>

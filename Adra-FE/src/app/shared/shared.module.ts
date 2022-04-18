@@ -7,10 +7,20 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import { YearMonthPickerComponent } from './year-month-picker/year-month-picker.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    YearMonthPickerComponent
+  ],
   imports: [
+    // vendor
+    ReactiveFormsModule,
+    CommonModule,
+
+    // material
+    MatFormFieldModule,
+    MatSelectModule
   ],
   exports: [
     // vendor
@@ -23,7 +33,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
     MatInputModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+
+    // components
+    YearMonthPickerComponent
   ]
 })
 export class SharedModule { }
