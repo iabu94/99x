@@ -20,6 +20,8 @@ This repository contains the Frontend Angular project and .net core backend proj
 - _Frontend_ - Angular, Material UI, Angular Google Charts
 - _Backend_ - .Net Core(5), Entity Framework Core, Fluent API, Automapper, Csv Helper, xUnit.
 
+**Note:** Angular is developed using the subscriber pattern. Not used RxJs.
+
 # Prerequisites
 
 - `.NET 5.0`

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Month } from '../../enums/month';
 import { last, monthsByYear, todayYearMonth, unique } from '../../helpers';
 import { Report, YearMonth } from '../../models';
@@ -10,7 +11,7 @@ import { ReportService } from '../../services';
   templateUrl: './view-balance.component.html',
   styleUrls: ['./view-balance.component.scss']
 })
-export class ViewBalanceComponent {
+export class ViewBalanceComponent implements OnDestroy {
   yearMonths: YearMonth[] = [];
   years: number[] = [];
   months: number[] = [];
@@ -18,6 +19,7 @@ export class ViewBalanceComponent {
   monthList = Month;
 
   report!: Report;
+  subscription = new Subscription();
 
   constructor(private route: ActivatedRoute, private reportService: ReportService) {
 
@@ -35,7 +37,12 @@ export class ViewBalanceComponent {
   }
 
   getAcBalance() {
-    this.reportService.getAccountBalances(this.selectedYearMonth)
+    const sub = this.reportService.getAccountBalances(this.selectedYearMonth)
       .subscribe(data => this.report = data);
+    this.subscription.add(sub);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

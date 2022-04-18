@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ChartType } from 'angular-google-charts';
+import { Subscription } from 'rxjs';
 import { GraphService } from 'src/app/services';
 import { Month } from '../../enums/month';
 import { last, monthsByYear, unique } from '../../helpers';
@@ -12,7 +13,7 @@ import { Report, YearMonth } from '../../models';
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.scss']
 })
-export class GraphComponent {
+export class GraphComponent implements OnDestroy {
   title = ``;
   type = ChartType.LineChart;
   options = {
@@ -39,6 +40,8 @@ export class GraphComponent {
 
   graphForm: FormGroup;
 
+  subscription = new Subscription();
+
   constructor(private graphService: GraphService, private fb: FormBuilder, private route: ActivatedRoute) {
     this.graphForm = this.initializeForm();
     this.yearMonths = this.route.snapshot.data['yearMonths'];
@@ -57,10 +60,11 @@ export class GraphComponent {
   }
 
   fetchGraphData() {
-    this.graphService.getGraphData(this.graphForm.value).subscribe(reports => {
+    const sub = this.graphService.getGraphData(this.graphForm.value).subscribe(reports => {
       this.reports = reports;
       this.generateGraphData();
     });
+    this.subscription.add(sub);
   }
 
   generateGraphData() {
@@ -105,5 +109,9 @@ export class GraphComponent {
   setMonthEnd(year: number) {
     this.toMonths = monthsByYear(this.yearMonths, year);
     this.f['monthEnd'].patchValue(this.toMonths[0]);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
