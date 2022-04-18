@@ -5,8 +5,7 @@ import { YearMonth } from 'src/app/models';
 
 @Component({
   selector: 'adra-year-month-picker',
-  templateUrl: './year-month-picker.component.html',
-  styleUrls: ['./year-month-picker.component.scss']
+  templateUrl: './year-month-picker.component.html'
 })
 export class YearMonthPickerComponent {
   monthList = Month;
