@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Report } from '../models';
 import { handleError } from './error-handler';
 
@@ -9,7 +10,7 @@ import { handleError } from './error-handler';
 })
 export class GraphService {
 
-  private url = 'https://localhost:5001/api/Report/Graph'
+  private url = `${environment.apiUrl}/Report/Graph`;
 
   constructor(private http: HttpClient) { }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Adra.Api.Controllers
 {
@@ -6,7 +7,7 @@ namespace Adra.Api.Controllers
     /// This is a sample controller to test the hosted api is working
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ValuesController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -14,6 +15,7 @@ namespace Adra.Api.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public IActionResult Get()
         {

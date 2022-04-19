@@ -11,6 +11,11 @@ using Adra.Infrastructure.Contracts;
 using Adra.Infrastructure.Services;
 using Adra.Domain.Contracts;
 using Adra.Data.Repositories;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Adra.Authz.Contracts;
+using Adra.Authz.Services;
 
 namespace Adra.Api
 {
@@ -40,6 +45,29 @@ namespace Adra.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Adra.Api", Version = "v1" });
             });
             services.AddAutoMapper(typeof(Startup));
+
+            // Authentication
+            var tokenKey = Configuration.GetValue<string>("TokenKey");
+            var key = Encoding.ASCII.GetBytes(tokenKey);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+            services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +90,7 @@ namespace Adra.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseMiddleware<ExceptionMiddleware>();

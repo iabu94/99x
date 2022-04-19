@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { handleError } from './error-handler';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { handleError } from './error-handler';
 })
 export class ReferenceDataService {
 
-  private url = 'https://localhost:5001/api/ReferenceData'
+  private url = `${environment.apiUrl}/ReferenceData`;
 
   constructor(private http: HttpClient) { }
 

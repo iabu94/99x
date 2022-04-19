@@ -4,14 +4,33 @@
         <mat-icon>menu</mat-icon>
     </button>
     <span>ADRA - Account Balance Overview Tool</span>
+    <span class="example-spacer"></span>
+    <ng-container *ngIf="user$ | async as user">
+        <span>Hello, {{user.unique_name}}</span>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with user icon"
+            [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+    </ng-container>
 </mat-toolbar>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">Logout</button>
+</mat-menu>
 
 <mat-sidenav-container class="adra-container">
     <mat-sidenav #sidenav mode="side" opened class="adra-sidenav">
         <mat-nav-list>
-            <mat-list-item [routerLink]="['/upload-file']">Upload Balance</mat-list-item>
-            <mat-list-item [routerLink]="['/balance-viewer']">View Balances</mat-list-item>
-            <mat-list-item [routerLink]="['/generate-graph']">Graph</mat-list-item>
+            <ng-container *ngIf="user$ | async as user">
+                <mat-list-item *ngIf="user.role == 'Administrator'" [routerLink]="['/dashboard/upload-file']">Upload
+                    Balance
+                </mat-list-item>
+                <mat-list-item *ngIf="user.role == 'User'" [routerLink]="['/dashboard/balance-viewer']">View Balances
+                </mat-list-item>
+                <mat-list-item *ngIf="user.role == 'Administrator'" [routerLink]="['/dashboard/generate-graph']">Graph
+                    View
+                </mat-list-item>
+            </ng-container>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="adra-sidenav-content">

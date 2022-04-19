@@ -49,3 +49,15 @@ This repository contains the Frontend Angular project and .net core backend proj
 - Run the command - `ng serve -o`
 - Now the UI will be opened in your default browser with the link.
 - To run the unit tests, in the same directory run the command - `ng test`
+
+# User Credentials
+
+### Administrator
+
+- username - `admin`
+- password - `admin123`
+
+### Normal User
+
+- username - `user`
+- password - `user123`
