@@ -1,8 +1,10 @@
 ﻿using Adra.Api.DTOs;
+using Adra.Authz.Constants;
 using Adra.Domain.Contracts;
 using Adra.Domain.Entities;
 using Adra.Infrastructure.Contracts;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,7 @@ namespace Adra.Api.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [Authorize(Roles = UserRoleConstants.ADMIN)]
         [HttpPost("Upload"), DisableRequestSizeLimit]
         public async Task<IActionResult> UploadReport([FromForm] ReportUploadDto reportUploadDto)
         {
@@ -54,6 +57,7 @@ namespace Adra.Api.Controllers
             return Ok(_mapper.Map<ReportDto>(report));
         }
 
+        [Authorize(Roles = UserRoleConstants.USER)]
         [HttpGet("{year}/{month}")]
         public IActionResult GetAccountBalanceByYearMonth(int year, int month)
         {
@@ -65,12 +69,14 @@ namespace Adra.Api.Controllers
             return Ok(res);
         }
 
+        [Authorize(Roles = UserRoleConstants.ADMIN)]
         [HttpGet("Exists/{year}/{month}")]
         public IActionResult CheckReportExists(int year, int month)
         {
             return Ok(_reportRepository.CheckReportExists(year, month));
         }
 
+        [Authorize(Roles = UserRoleConstants.ADMIN)]
         [HttpPost("Graph")]
         public IActionResult GetGraphData([FromBody] GraphRequestDto grDto)
         {
