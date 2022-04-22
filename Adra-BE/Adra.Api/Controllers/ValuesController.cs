@@ -15,7 +15,6 @@ namespace Adra.Api.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public IActionResult Get()
         {
