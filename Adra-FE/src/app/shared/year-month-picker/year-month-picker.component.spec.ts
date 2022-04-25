@@ -1,4 +1,3 @@
-import { DebugElement } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -9,8 +8,6 @@ import { YearMonthPickerComponent } from "./year-month-picker.component";
 describe('YearMonthPickerComponent', () => {
     let component: YearMonthPickerComponent;
     let fixture: ComponentFixture<YearMonthPickerComponent>;
-    let de: DebugElement;
-    let el: HTMLElement;
     let formElement: any;
 
     beforeEach(async () => {
@@ -67,5 +64,19 @@ describe('YearMonthPickerComponent', () => {
         component.f['month'].patchValue(5);
         fixture.detectChanges();
         expect(component.yearMonth.emit).toHaveBeenCalledWith({ year: 2022, month: 5 });
+    });
+
+    it('Year value should be a required field', () => {
+        const yearControl = component.f['year'];
+        yearControl.patchValue(null);
+        fixture.detectChanges();
+        expect(yearControl.valid).toBeFalsy();
+    });
+
+    it('Month value should be a required field', () => {
+        const monthControl = component.f['month'];
+        monthControl.patchValue(null);
+        fixture.detectChanges();
+        expect(monthControl.valid).toBeFalsy();
     });
 });
