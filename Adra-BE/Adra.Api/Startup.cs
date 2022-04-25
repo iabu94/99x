@@ -74,7 +74,7 @@ namespace Adra.Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors(builder => builder
-                 .WithOrigins(new string[] { "http://localhost:4200" })
+                 .WithOrigins(new string[] { "http://localhost:4200", "https://adra-ui.herokuapp.com" })
                  .AllowAnyMethod()
                  .AllowAnyHeader()
                  .AllowCredentials());
