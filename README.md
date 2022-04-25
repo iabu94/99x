@@ -42,6 +42,8 @@ This repository contains the Frontend Angular project and .net core backend proj
 - Now the API is up and running in the link - `https://localhost:5001`
 - To run the unit tests, navigate to the folder - `'<root-directory>\99x\Adra-BE'` and run the command - `dotnet test`
 
+_Note: Only one controller covered by the complete unit tests is `ReportControllerTest.cs`_
+
 ## Frontend
 
 - Open CMD
@@ -50,7 +52,16 @@ This repository contains the Frontend Angular project and .net core backend proj
 - Now the UI will be opened in your default browser with the link.
 - To run the unit tests, in the same directory run the command - `ng test`
 
-# User Credentials
+_Note: Only one component completely covered by the frontend unit tests is `year-month-picker.component.spec.ts`_
+
+# Live App & User Credentials
+
+### You can now explore the production live application from the below links.
+
+- UI - https://adra-ui.herokuapp.com
+- API - https://adra-api.herokuapp.com
+
+_Note - There are no loading indicators configured while api calls. So please wait for a while to complete the endpoint http calls._
 
 ### Administrator
 
